@@ -11,6 +11,7 @@ topNewsElement.addEventListener("click", topNews);
 prevButton.addEventListener("click", previousPage);
 nextButton.addEventListener("click", nextPage);
 newestNewsElement.addEventListener("click", getNewestNews);
+jobsElement.addEventListener("click", getJobs);
 
 async function getNewestNews() {
     let news = await apiGet("/newest");
@@ -31,7 +32,19 @@ async function topNews() {
     topNewsElement.firstElementChild.classList.add("active-page");
     jobsElement.firstElementChild.classList.remove("active-page");
     mainPage.firstElementChild.classList.remove("active-page");
-    newestNewsElement.firstElementChild.classList.remove("active-page");}
+    newestNewsElement.firstElementChild.classList.remove("active-page");
+}
+
+async function getJobs() {
+    const news = await apiGet("/jobs");
+    cardBuilder(news);
+    prevButton.dataset.url = "/jobs?page=";
+    nextButton.dataset.url = "/jobs?page=";
+    topNewsElement.firstElementChild.classList.remove("active-page");
+    jobsElement.firstElementChild.classList.add("active-page");
+    mainPage.firstElementChild.classList.remove("active-page");
+    newestNewsElement.firstElementChild.classList.remove("active-page");
+}
 
 async function previousPage() {
     let currentPage = parseInt(prevButton.dataset.currentPage);
@@ -49,7 +62,7 @@ async function nextPage() {
     let pageIdentifier = (currentPage + 1).toString();
     nextButton.dataset.currentPage = pageIdentifier;
     prevButton.dataset.currentPage = pageIdentifier;
-    let news = await apiGet(url+pageIdentifier);
+    let news = await apiGet(url + pageIdentifier);
     cardBuilder(news);
 }
 
