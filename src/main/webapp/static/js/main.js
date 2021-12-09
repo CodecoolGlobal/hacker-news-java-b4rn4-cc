@@ -18,9 +18,7 @@ mainPage.addEventListener("click", init);
 async function getNewestNews() {
     let news = await apiGet("/newest");
     cardBuilder(news);
-    buttonsDiv.style.display = "block";
-    prevButton.dataset.url = "/newest?page=";
-    nextButton.dataset.url = "/newest?page=";
+    setupButtons("/newest?page=");
     topNewsElement.firstElementChild.classList.remove("active-page");
     jobsElement.firstElementChild.classList.remove("active-page");
     mainPage.firstElementChild.classList.remove("active-page");
@@ -30,9 +28,7 @@ async function getNewestNews() {
 async function topNews() {
     const news = await getTopNews();
     cardBuilder(news);
-    buttonsDiv.style.display = "block";
-    prevButton.dataset.url = "/top-news?page=";
-    nextButton.dataset.url = "/top-news?page=";
+    setupButtons("/top-news?page=");
     topNewsElement.firstElementChild.classList.add("active-page");
     jobsElement.firstElementChild.classList.remove("active-page");
     mainPage.firstElementChild.classList.remove("active-page");
@@ -42,9 +38,7 @@ async function topNews() {
 async function getJobs() {
     const news = await apiGet("/jobs");
     cardBuilder(news);
-    buttonsDiv.style.display = "block";
-    prevButton.dataset.url = "/jobs?page=";
-    nextButton.dataset.url = "/jobs?page=";
+    setupButtons("/jobs?page=");
     topNewsElement.firstElementChild.classList.remove("active-page");
     jobsElement.firstElementChild.classList.add("active-page");
     mainPage.firstElementChild.classList.remove("active-page");
@@ -82,6 +76,14 @@ async function apiGet(url) {
     if (response.ok) {
         return response.json();
     }
+}
+
+function setupButtons(url) {
+    nextButton.dataset.currentPage = "1";
+    prevButton.dataset.currentPage = "1";
+    buttonsDiv.style.display = "block";
+    prevButton.dataset.url = url;
+    nextButton.dataset.url = url;
 }
 
 function cardBuilder(news) {
