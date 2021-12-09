@@ -5,9 +5,21 @@ const nextButton = document.getElementById("next");
 
 contentDiv.classList.add("cards_wrap");
 topNewsElement.addEventListener("click", topNews);
+prevButton.addEventListener("click", previousPage);
 
 async function topNews() {
     const news = await getTopNews();
+    cardBuilder(news);
+}
+
+async function previousPage() {
+    let currentPage = parseInt(prevButton.dataset.currentPage);
+    let url = "/top-news?page=";
+    let pageIdentifier = (currentPage - 1).toString();
+    nextButton.dataset.currentPage = pageIdentifier;
+    prevButton.dataset.currentPage = pageIdentifier;
+    let news = await apiGet(url + pageIdentifier);
+    cardBuilder(news);
 }
 
 async function getTopNews() {
@@ -24,6 +36,7 @@ async function apiGet(url) {
 }
 
 function cardBuilder(news) {
+    contentDiv.innerHTML = "";
     for (const currentNews of news) {
         let cardItemDiv = document.createElement("div");
         let cardDiv = document.createElement("div");
