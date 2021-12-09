@@ -13,16 +13,20 @@ newestNewsElement.addEventListener("click", getNewestNews);
 async function getNewestNews() {
     let news = await apiGet("/newest");
     cardBuilder(news);
+    prevButton.dataset.url = "/newest?page=";
+    nextButton.dataset.url = "/newest?page=";
 }
 
 async function topNews() {
     const news = await getTopNews();
     cardBuilder(news);
+    prevButton.dataset.url = "/top-news?page=";
+    nextButton.dataset.url = "/top-news?page=";
 }
 
 async function previousPage() {
     let currentPage = parseInt(prevButton.dataset.currentPage);
-    let url = "/top-news?page=";
+    let url = prevButton.dataset.url;
     let pageIdentifier = (currentPage - 1).toString();
     nextButton.dataset.currentPage = pageIdentifier;
     prevButton.dataset.currentPage = pageIdentifier;
@@ -32,7 +36,7 @@ async function previousPage() {
 
 async function nextPage() {
     let currentPage = parseInt(nextButton.dataset.currentPage);
-    let url = "/top-news?page=";
+    let url = nextButton.dataset.url;
     let pageIdentifier = (currentPage + 1).toString();
     nextButton.dataset.currentPage = pageIdentifier;
     prevButton.dataset.currentPage = pageIdentifier;
