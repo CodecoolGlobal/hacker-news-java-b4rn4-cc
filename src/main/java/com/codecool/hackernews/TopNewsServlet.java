@@ -5,17 +5,38 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.*;
+import java.util.Objects;
 
-@WebServlet(name = "anotherServlet", urlPatterns = {"/another"}, loadOnStartup = 2)
-public class AnotherServlet extends HttpServlet {
+@WebServlet(name = "anotherServlet", urlPatterns = {"/top-news"}, loadOnStartup = 2)
+public class TopNewsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        String requestPage = request.getParameter("page");
+        String page;
+        page = Objects.requireNonNullElse(requestPage, "1");
+        URL url = new URL("https://api.hnpwa.com/v0/news/" + page +".json");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+        in.close();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.println(content);
 
-        StringBuffer buffer = new StringBuffer();
+        /*StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < 10; i++) {
             buffer.append("<div>");
             buffer.append("<a href=\"/another?link_id=" + i + "\">");
@@ -41,6 +62,6 @@ public class AnotherServlet extends HttpServlet {
                         "  <div>" + buffer.toString() + "</div>" +
                         "</body>" +
                         "</html>"
-        );
+        );*/
     }
 }
