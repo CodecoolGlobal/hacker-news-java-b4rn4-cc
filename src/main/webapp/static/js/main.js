@@ -130,9 +130,9 @@ function decideToDisplayButton() {
 }
 
 async function init() {
+    buttonsDiv.style.display = "none";
     let content = await apiGet("/top-news");
     cardBuilder(content);
-    buttonsDiv.style.display = "none";
     mainPage.firstElementChild.classList.add("active-page");
     newestNewsElement.firstElementChild.classList.remove("active-page");
     topNewsElement.firstElementChild.classList.remove("active-page");
