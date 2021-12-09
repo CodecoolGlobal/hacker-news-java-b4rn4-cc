@@ -23,16 +23,25 @@ public class HackerNewServlet extends javax.servlet.http.HttpServlet {
                         "<head>" +
                         "  <title>" + title + "</title>" +
                         "  <link rel=\"stylesheet\" type=\"text/css\" href='/static/css/site.css' />" +
+                        "<script src='/static/js/main.js' defer></script>" +
                         "</head>\n" +
                         "<body>\n" +
                         "<h1 align = \"center\">" + title + "</h1>\n" +
-                        "<ul>\n" +
-                        "<li><b>First Name</b>: " + request.getParameter("first_name") + "\n" +
-                        "<li><b>Last Name</b>: " + request.getParameter("last_name") + "\n" +
+                        "<ul id=\"nav-bar\">\n" +
+                        "<li id=\"main-page\"><b>Hackson News</b>" + "\n" +
+                        "<li id=\"top-news\"><b>Top News</b>" + "\n" +
+                        "<li id=\"newest\"><b>Newest</b>" + "\n" +
+                        "<li id=\"jobs\"><b>Jobs</b>" + "\n" +
                         "</ul>\n" +
-                        "<div class='visit'>You can serve any static content from <span class='folder'>webapp/static</span> folder, like a css file.</div>" +
-                        "<div>Visit another servlet: <a href=\"/another\">Visit the other servlet</a></div>" +
-                        "<div>You can provide a json file as well: <a href=\"/json\">Visit Hacker News json data example</a></div>" +
+                        "<div id=\"nav-buttons\">" +
+                        "<button id=\"prev\" data-current-page=\"1\">Previous</button>" +
+                        "<button id=\"next\" data-current-page=\"1\">Next</button>" +
+                        "</div>" +
+                        "<div id=\"content\"></div>" +
+                        "<footer>" +
+                        "<p>Dev: Barnabás Mayer</p>" + "\n" +
+                        "<p><a href=\"mailto:barna.m42@gmail.com\">barna.m42@gmail.com</a>" + "\n" +
+                        "</footer>" +
                         "</body></html>"
         );
     }
