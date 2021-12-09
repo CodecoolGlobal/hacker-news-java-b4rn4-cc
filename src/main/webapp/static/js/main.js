@@ -6,6 +6,7 @@ const nextButton = document.getElementById("next");
 contentDiv.classList.add("cards_wrap");
 topNewsElement.addEventListener("click", topNews);
 prevButton.addEventListener("click", previousPage);
+nextButton.addEventListener("click", nextPage);
 
 async function topNews() {
     const news = await getTopNews();
@@ -19,6 +20,16 @@ async function previousPage() {
     nextButton.dataset.currentPage = pageIdentifier;
     prevButton.dataset.currentPage = pageIdentifier;
     let news = await apiGet(url + pageIdentifier);
+    cardBuilder(news);
+}
+
+async function nextPage() {
+    let currentPage = parseInt(nextButton.dataset.currentPage);
+    let url = "/top-news?page=";
+    let pageIdentifier = (currentPage + 1).toString();
+    nextButton.dataset.currentPage = pageIdentifier;
+    prevButton.dataset.currentPage = pageIdentifier;
+    let news = await apiGet(url+pageIdentifier);
     cardBuilder(news);
 }
 
