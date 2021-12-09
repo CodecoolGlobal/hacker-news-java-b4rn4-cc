@@ -1,12 +1,19 @@
 const topNewsElement = document.getElementById("top-news");
 const prevButton = document.getElementById("prev");
-const contentDiv = document.getElementById("content")
+const contentDiv = document.getElementById("content");
 const nextButton = document.getElementById("next");
+const newestNewsElement = document.getElementById("newest");
 
 contentDiv.classList.add("cards_wrap");
 topNewsElement.addEventListener("click", topNews);
 prevButton.addEventListener("click", previousPage);
 nextButton.addEventListener("click", nextPage);
+newestNewsElement.addEventListener("click", getNewestNews);
+
+async function getNewestNews() {
+    let news = await apiGet("/newest");
+    cardBuilder(news);
+}
 
 async function topNews() {
     const news = await getTopNews();
