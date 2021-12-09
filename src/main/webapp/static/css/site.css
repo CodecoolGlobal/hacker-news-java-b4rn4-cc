@@ -11,6 +11,10 @@
     padding: 3px;
 }
 
+a {
+    letter-spacing: 1px;
+}
+
 a:link {
     color: #90e0ef;
 }
