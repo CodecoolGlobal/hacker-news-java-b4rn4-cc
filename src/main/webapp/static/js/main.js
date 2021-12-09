@@ -5,6 +5,7 @@ const nextButton = document.getElementById("next");
 const newestNewsElement = document.getElementById("newest");
 const jobsElement = document.getElementById("jobs");
 const mainPage = document.getElementById("main-page");
+const buttonsDiv = document.getElementById("nav-buttons");
 
 contentDiv.classList.add("cards_wrap");
 topNewsElement.addEventListener("click", topNews);
@@ -12,10 +13,12 @@ prevButton.addEventListener("click", previousPage);
 nextButton.addEventListener("click", nextPage);
 newestNewsElement.addEventListener("click", getNewestNews);
 jobsElement.addEventListener("click", getJobs);
+mainPage.addEventListener("click", init);
 
 async function getNewestNews() {
     let news = await apiGet("/newest");
     cardBuilder(news);
+    buttonsDiv.style.display = "block";
     prevButton.dataset.url = "/newest?page=";
     nextButton.dataset.url = "/newest?page=";
     topNewsElement.firstElementChild.classList.remove("active-page");
@@ -27,6 +30,7 @@ async function getNewestNews() {
 async function topNews() {
     const news = await getTopNews();
     cardBuilder(news);
+    buttonsDiv.style.display = "block";
     prevButton.dataset.url = "/top-news?page=";
     nextButton.dataset.url = "/top-news?page=";
     topNewsElement.firstElementChild.classList.add("active-page");
@@ -38,6 +42,7 @@ async function topNews() {
 async function getJobs() {
     const news = await apiGet("/jobs");
     cardBuilder(news);
+    buttonsDiv.style.display = "block";
     prevButton.dataset.url = "/jobs?page=";
     nextButton.dataset.url = "/jobs?page=";
     topNewsElement.firstElementChild.classList.remove("active-page");
@@ -103,3 +108,15 @@ function cardBuilder(news) {
         contentDiv.append(cardItemDiv);
     }
 }
+
+async function init() {
+    let content = await apiGet("/top-news");
+    cardBuilder(content);
+    buttonsDiv.style.display = "none";
+    mainPage.firstElementChild.classList.add("active-page");
+    newestNewsElement.firstElementChild.classList.remove("active-page");
+    topNewsElement.firstElementChild.classList.remove("active-page");
+    jobsElement.firstElementChild.classList.remove("active-page");
+}
+
+init();
