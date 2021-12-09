@@ -19,6 +19,7 @@ async function getNewestNews() {
     let news = await apiGet("/newest");
     cardBuilder(news);
     setupButtons("/newest?page=");
+    decideToDisplayButton();
     topNewsElement.firstElementChild.classList.remove("active-page");
     jobsElement.firstElementChild.classList.remove("active-page");
     mainPage.firstElementChild.classList.remove("active-page");
@@ -29,6 +30,7 @@ async function topNews() {
     const news = await getTopNews();
     cardBuilder(news);
     setupButtons("/top-news?page=");
+    decideToDisplayButton();
     topNewsElement.firstElementChild.classList.add("active-page");
     jobsElement.firstElementChild.classList.remove("active-page");
     mainPage.firstElementChild.classList.remove("active-page");
@@ -38,7 +40,7 @@ async function topNews() {
 async function getJobs() {
     const news = await apiGet("/jobs");
     cardBuilder(news);
-    setupButtons("/jobs?page=");
+    buttonsDiv.style.display = "none";
     topNewsElement.firstElementChild.classList.remove("active-page");
     jobsElement.firstElementChild.classList.add("active-page");
     mainPage.firstElementChild.classList.remove("active-page");
@@ -53,6 +55,7 @@ async function previousPage() {
     prevButton.dataset.currentPage = pageIdentifier;
     let news = await apiGet(url + pageIdentifier);
     cardBuilder(news);
+    decideToDisplayButton();
 }
 
 async function nextPage() {
@@ -63,6 +66,7 @@ async function nextPage() {
     prevButton.dataset.currentPage = pageIdentifier;
     let news = await apiGet(url + pageIdentifier);
     cardBuilder(news);
+    decideToDisplayButton();
 }
 
 async function getTopNews() {
@@ -108,6 +112,20 @@ function cardBuilder(news) {
         cardDiv.append(titleDiv, timeAgoDiv, authorDiv);
         cardItemDiv.append(cardDiv);
         contentDiv.append(cardItemDiv);
+    }
+}
+
+function decideToDisplayButton() {
+    let currentPage = prevButton.dataset.currentPage;
+    if (currentPage === "1") {
+        prevButton.style.display = "none";
+        nextButton.style.display = "inline-block";
+    } else if (currentPage === "10") {
+        prevButton.style.display = "inline-block";
+        nextButton.style.display = "none";
+    } else {
+        prevButton.style.display = "inline-block";
+        nextButton.style.display = "inline-block";
     }
 }
 
