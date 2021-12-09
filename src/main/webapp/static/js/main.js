@@ -3,6 +3,8 @@ const prevButton = document.getElementById("prev");
 const contentDiv = document.getElementById("content");
 const nextButton = document.getElementById("next");
 const newestNewsElement = document.getElementById("newest");
+const jobsElement = document.getElementById("jobs");
+const mainPage = document.getElementById("main-page");
 
 contentDiv.classList.add("cards_wrap");
 topNewsElement.addEventListener("click", topNews);
@@ -15,6 +17,10 @@ async function getNewestNews() {
     cardBuilder(news);
     prevButton.dataset.url = "/newest?page=";
     nextButton.dataset.url = "/newest?page=";
+    topNewsElement.firstElementChild.classList.remove("active-page");
+    jobsElement.firstElementChild.classList.remove("active-page");
+    mainPage.firstElementChild.classList.remove("active-page");
+    newestNewsElement.firstElementChild.classList.add("active-page");
 }
 
 async function topNews() {
@@ -22,7 +28,10 @@ async function topNews() {
     cardBuilder(news);
     prevButton.dataset.url = "/top-news?page=";
     nextButton.dataset.url = "/top-news?page=";
-}
+    topNewsElement.firstElementChild.classList.add("active-page");
+    jobsElement.firstElementChild.classList.remove("active-page");
+    mainPage.firstElementChild.classList.remove("active-page");
+    newestNewsElement.firstElementChild.classList.remove("active-page");}
 
 async function previousPage() {
     let currentPage = parseInt(prevButton.dataset.currentPage);

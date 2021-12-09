@@ -45,7 +45,7 @@ h1 {
     float: left;
 }
 
-#nav-bar b {
+b {
     background-color: #f5f5f5;
     display: block;
     padding: 15px;
@@ -58,6 +58,11 @@ h1 {
     background-color: #233d4d;
     color: #f5f5f5;
     cursor: pointer;
+}
+
+.active-page {
+    background-color: #233d4d;
+    color: #f5f5f5;
 }
 
 #nav-buttons {
