@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Objects;
 
@@ -23,10 +22,7 @@ public class NewestServlet extends HttpServlet {
         page = Objects.requireNonNullElse(requestPage, "1");
 
         URL url = new URL("https://api.hnpwa.com/v0/newest/" + page + ".json");
-        StringBuffer content = Util.getStringifiedJson(url);
 
-        PrintWriter out = response.getWriter();
-
-        out.println(content);
+        Util.setupJson(response, url);
     }
 }
